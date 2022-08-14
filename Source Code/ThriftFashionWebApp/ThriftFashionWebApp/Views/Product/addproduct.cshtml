@@ -1,0 +1,65 @@
+﻿@model List<ThriftFashionWebApp.Models.tbl_product>
+<link href="~/Content/css/styles.css" rel="stylesheet" />
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="~/Content/assets/favicon.ico" />
+<!-- Font Awesome icons (free version)-->
+<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+<!-- Google fonts-->
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+<!-- tailwindcss -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" />
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Masthead-->
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container">
+        <div class="masthead-subheading">THRIFT FASHION</div>
+        <div class="masthead-heading text-uppercase">Add Product</div>
+        <!-- <a class="btn btn-primary btn-xl text-uppercase" href="#services">Explore More</a> -->
+    </div>
+</header>
+
+
+<form method="post" enctype="multipart/form-data">
+    <select name="pr_id">
+        @{
+            foreach (var item in Model)
+            {
+                <option value="@item.pro_id">@item.pro_name</option>
+            }
+        }
+    </select>
+
+
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input name="price" type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input name="disc" type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlFile1">Example file input</label>
+        <input name="image" type="file" class="form-control-file" id="exampleFormControlFile1">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+
+</form>
+
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="~/Content/js/scripts.js"></script>
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+

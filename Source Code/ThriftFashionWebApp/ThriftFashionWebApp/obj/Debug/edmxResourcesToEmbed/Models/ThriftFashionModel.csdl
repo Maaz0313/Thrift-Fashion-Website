@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="thriftsfashionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tbl_invoice">
+    <Key>
+      <PropertyRef Name="in_id" />
+    </Key>
+    <Property Name="in_id" Type="Int32" Nullable="false" />
+    <Property Name="in_fk_name" Type="Int32" />
+    <Property Name="in_date" Type="DateTime" Precision="3" />
+    <Property Name="u_totalbill" Type="Double" />
+    <NavigationProperty Name="tbl_user" Relationship="Self.FK__tbl_invoi__in_fk__29572725" FromRole="tbl_invoice" ToRole="tbl_user" />
+    <NavigationProperty Name="tbl_order" Relationship="Self.FK__tbl_order__o_fk___2E1BDC42" FromRole="tbl_invoice" ToRole="tbl_order" />
+  </EntityType>
+  <EntityType Name="tbl_order">
+    <Key>
+      <PropertyRef Name="o_id" />
+    </Key>
+    <Property Name="o_id" Type="Int32" Nullable="false" />
+    <Property Name="o_fk_name" Type="Int32" />
+    <Property Name="o_fk_pro" Type="Int32" />
+    <Property Name="o_date" Type="DateTime" Precision="3" />
+    <Property Name="o_qty" Type="Int32" />
+    <Property Name="o_bill" Type="Double" />
+    <Property Name="o_unitprice" Type="Int32" />
+    <NavigationProperty Name="tbl_invoice" Relationship="Self.FK__tbl_order__o_fk___2E1BDC42" FromRole="tbl_order" ToRole="tbl_invoice" />
+    <NavigationProperty Name="tbl_product" Relationship="Self.FK__tbl_order__o_fk___2F10007B" FromRole="tbl_order" ToRole="tbl_product" />
+  </EntityType>
+  <EntityType Name="tbl_product">
+    <Key>
+      <PropertyRef Name="pro_id" />
+    </Key>
+    <Property Name="pro_id" Type="Int32" Nullable="false" />
+    <Property Name="pro_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="pro_price" Type="Double" />
+    <Property Name="pro_desc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="pro_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tbl_order" Relationship="Self.FK__tbl_order__o_fk___2F10007B" FromRole="tbl_product" ToRole="tbl_order" />
+  </EntityType>
+  <EntityType Name="tbl_user">
+    <Key>
+      <PropertyRef Name="U_id" />
+    </Key>
+    <Property Name="U_id" Type="Int32" Nullable="false" />
+    <Property Name="u_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="u_contact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="u_password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="tbl_invoice" Relationship="Self.FK__tbl_invoi__in_fk__29572725" FromRole="tbl_user" ToRole="tbl_invoice" />
+    <NavigationProperty Name="UerRoles" Relationship="Self.FK__UerRole__User_Id__267ABA7A" FromRole="tbl_user" ToRole="UerRole" />
+  </EntityType>
+  <EntityType Name="UerRole">
+    <Key>
+      <PropertyRef Name="Role_Id" />
+    </Key>
+    <Property Name="Role_Id" Type="Int32" Nullable="false" />
+    <Property Name="User_Id_fk" Type="Int32" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tbl_user" Relationship="Self.FK__UerRole__User_Id__267ABA7A" FromRole="UerRole" ToRole="tbl_user" />
+  </EntityType>
+  <Association Name="FK__tbl_invoi__in_fk__29572725">
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="0..1" />
+    <End Role="tbl_invoice" Type="Self.tbl_invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_user">
+        <PropertyRef Name="U_id" />
+      </Principal>
+      <Dependent Role="tbl_invoice">
+        <PropertyRef Name="in_fk_name" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tbl_order__o_fk___2E1BDC42">
+    <End Role="tbl_invoice" Type="Self.tbl_invoice" Multiplicity="0..1" />
+    <End Role="tbl_order" Type="Self.tbl_order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_invoice">
+        <PropertyRef Name="in_id" />
+      </Principal>
+      <Dependent Role="tbl_order">
+        <PropertyRef Name="o_fk_name" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__tbl_order__o_fk___2F10007B">
+    <End Role="tbl_product" Type="Self.tbl_product" Multiplicity="0..1" />
+    <End Role="tbl_order" Type="Self.tbl_order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_product">
+        <PropertyRef Name="pro_id" />
+      </Principal>
+      <Dependent Role="tbl_order">
+        <PropertyRef Name="o_fk_pro" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UerRole__User_Id__267ABA7A">
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="0..1" />
+    <End Role="UerRole" Type="Self.UerRole" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_user">
+        <PropertyRef Name="U_id" />
+      </Principal>
+      <Dependent Role="UerRole">
+        <PropertyRef Name="User_Id_fk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="thriftsfashionEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tbl_invoice" EntityType="Self.tbl_invoice" />
+    <EntitySet Name="tbl_order" EntityType="Self.tbl_order" />
+    <EntitySet Name="tbl_product" EntityType="Self.tbl_product" />
+    <EntitySet Name="tbl_user" EntityType="Self.tbl_user" />
+    <EntitySet Name="UerRoles" EntityType="Self.UerRole" />
+    <AssociationSet Name="FK__tbl_invoi__in_fk__29572725" Association="Self.FK__tbl_invoi__in_fk__29572725">
+      <End Role="tbl_user" EntitySet="tbl_user" />
+      <End Role="tbl_invoice" EntitySet="tbl_invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tbl_order__o_fk___2E1BDC42" Association="Self.FK__tbl_order__o_fk___2E1BDC42">
+      <End Role="tbl_invoice" EntitySet="tbl_invoice" />
+      <End Role="tbl_order" EntitySet="tbl_order" />
+    </AssociationSet>
+    <AssociationSet Name="FK__tbl_order__o_fk___2F10007B" Association="Self.FK__tbl_order__o_fk___2F10007B">
+      <End Role="tbl_product" EntitySet="tbl_product" />
+      <End Role="tbl_order" EntitySet="tbl_order" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UerRole__User_Id__267ABA7A" Association="Self.FK__UerRole__User_Id__267ABA7A">
+      <End Role="tbl_user" EntitySet="tbl_user" />
+      <End Role="UerRole" EntitySet="UerRoles" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
